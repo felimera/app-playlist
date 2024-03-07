@@ -22,7 +22,7 @@ create table tbl_song(
     son_album varchar(100) not null,
     son_year varchar(10) not null,
     son_gender varchar(100) not null,
-    son_playlist_id int not null
+    son_playlist_id int null
 );
 
 alter table tbl_song add foreign key (son_playlist_id) references tbl_playlist(pl_id);

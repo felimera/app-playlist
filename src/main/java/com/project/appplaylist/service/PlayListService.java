@@ -8,4 +8,8 @@ import java.util.List;
 @Service
 public interface PlayListService {
     List<PlayList> getAll();
+
+    PlayList postPlayList(PlayList playList);
+
+    void deletePlayList(Integer id);
 }
