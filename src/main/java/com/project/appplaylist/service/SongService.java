@@ -8,4 +8,5 @@ import java.util.List;
 @Service
 public interface SongService {
     List<Song> getAll();
+    List<Song> getPlayListByListName(String listName);
 }

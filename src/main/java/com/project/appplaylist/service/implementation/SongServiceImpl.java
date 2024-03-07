@@ -22,4 +22,9 @@ public class SongServiceImpl implements SongService {
     public List<Song> getAll() {
         return songRepository.findAll();
     }
+
+    @Override
+    public List<Song> getPlayListByListName(String listName) {
+        return songRepository.getPlayListByListName(listName.toUpperCase());
+    }
 }
