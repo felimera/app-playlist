@@ -1,5 +1,7 @@
 package com.project.appplaylist.controller;
 
+import com.project.appplaylist.controller.dto.PlayListDTO;
+import com.project.appplaylist.controller.mapper.PlayListMapper;
 import com.project.appplaylist.model.PlayList;
 import com.project.appplaylist.service.PlayListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "lists")
+@RequestMapping(path = "playlist/lists")
 public class PlayListController {
 
     private PlayListService playListService;
@@ -24,7 +26,8 @@ public class PlayListController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PlayList>> getAll() {
-        return ResponseEntity.ok(playListService.getAll());
+    public ResponseEntity<List<PlayListDTO>> getAll() {
+        List<PlayList> playLists = playListService.getAll();
+        return ResponseEntity.ok(playLists.stream().map(PlayListMapper.INSTANCE::toDto).toList());
     }
 }
