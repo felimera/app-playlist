@@ -30,7 +30,7 @@ public class PlayListServiceImpl implements PlayListService {
     @Override
     public PlayList postPlayList(PlayList playList) {
         if (isExitByName(playList.getName())) {
-            throw new BadRequest("401", Constants.MESSAGE_NOT_FOUND);
+            throw new BadRequest("400", Constants.MESSAGE_NOT_FOUND);
         }
 
         return playListRepository.save(playList);
@@ -42,7 +42,7 @@ public class PlayListServiceImpl implements PlayListService {
         if (optionalPlayList.isPresent())
             playListRepository.delete(optionalPlayList.get());
         else
-            throw  new NotFoundException(Constants.MESSAGE_NOT_FOUND,"404", HttpStatus.NOT_FOUND);
+            throw new NotFoundException(Constants.MESSAGE_NOT_FOUND, "404", HttpStatus.NOT_FOUND);
     }
 
     private boolean isExitByName(String name) {
