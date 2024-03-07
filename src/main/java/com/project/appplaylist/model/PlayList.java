@@ -2,12 +2,8 @@ package com.project.appplaylist.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -21,7 +17,28 @@ public class PlayList {
     private String name;
     @Column(name = "pl_description")
     private String description;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "pl_song_id")
-    private Song song;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
