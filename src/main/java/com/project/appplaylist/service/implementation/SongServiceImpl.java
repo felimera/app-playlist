@@ -1,12 +1,15 @@
 package com.project.appplaylist.service.implementation;
 
+import com.project.appplaylist.exception.NotFoundException;
 import com.project.appplaylist.model.PlayList;
 import com.project.appplaylist.model.Song;
 import com.project.appplaylist.repository.SongRepository;
 import com.project.appplaylist.service.PlayListService;
 import com.project.appplaylist.service.SongService;
+import com.project.appplaylist.util.Constants;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +34,10 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public List<Song> getPlayListByListName(String listName) {
-        return songRepository.getPlayListByListName(listName.toUpperCase());
+        List<Song> songList = songRepository.getPlayListByListName(listName.toUpperCase());
+        if (songList.isEmpty())
+            throw new NotFoundException(Constants.MESSAGE_NOT_FOUND, "404", HttpStatus.NOT_FOUND);
+        return songList;
     }
 
     @Override
@@ -55,6 +61,8 @@ public class SongServiceImpl implements SongService {
             songOlds.forEach(song -> song.setPlayList(null));
             songRepository.saveAll(songOlds);
             playListService.deletePlayList(playList.getId());
+        } else {
+            throw new NotFoundException(Constants.MESSAGE_NOT_FOUND, "404", HttpStatus.NOT_FOUND);
         }
     }
 }
