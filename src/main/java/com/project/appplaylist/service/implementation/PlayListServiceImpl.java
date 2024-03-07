@@ -1,9 +1,13 @@
 package com.project.appplaylist.service.implementation;
 
+import com.project.appplaylist.exception.BadRequest;
+import com.project.appplaylist.exception.NotFoundException;
 import com.project.appplaylist.model.PlayList;
 import com.project.appplaylist.repository.PlayListRepository;
 import com.project.appplaylist.service.PlayListService;
+import com.project.appplaylist.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +29,9 @@ public class PlayListServiceImpl implements PlayListService {
 
     @Override
     public PlayList postPlayList(PlayList playList) {
-        if (isExitByName(playList.getName())) return null;
+        if (isExitByName(playList.getName())) {
+            throw new BadRequest("401", Constants.MESSAGE_NOT_FOUND);
+        }
 
         return playListRepository.save(playList);
     }
@@ -36,7 +42,7 @@ public class PlayListServiceImpl implements PlayListService {
         if (optionalPlayList.isPresent())
             playListRepository.delete(optionalPlayList.get());
         else
-            return;
+            throw  new NotFoundException(Constants.MESSAGE_NOT_FOUND,"404", HttpStatus.NOT_FOUND);
     }
 
     private boolean isExitByName(String name) {

@@ -1,5 +1,6 @@
 package com.project.appplaylist.controller;
 
+import com.project.appplaylist.exception.BadRequest;
 import com.project.appplaylist.exception.NotFoundException;
 import com.project.appplaylist.exception.ResponseMessageException;
 import com.project.appplaylist.model.exception.ExceptionControlMessage;
@@ -23,6 +24,12 @@ public class ControllerAdvice {
     public ResponseEntity<ExceptionResponseMessage> notFoundExceptionHandler(NotFoundException ex) {
         ExceptionResponseMessage error = ExceptionResponseMessage.builder().code(ex.getCode()).message(ex.getMessage()).build();
         return new ResponseEntity<>(error, ex.getHttpStatus());
+    }
+
+    @ExceptionHandler(value = BadRequest.class)
+    public ResponseEntity<ExceptionResponseMessage> notBadRequestHandler(BadRequest ex) {
+        ExceptionResponseMessage error = ExceptionResponseMessage.builder().message(ex.getMessage()).build();
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = MessagingException.class)
